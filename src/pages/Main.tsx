@@ -2,6 +2,7 @@ import { useState } from "react"
 import CreateRoomComponent from "../components/createrRoomComponent/CreateRoomComponent"
 import CreaterNameComponent from "../components/createrNameComponent/CreaterNameComponent"
 import RoomComponent from "../components/roomComponent/RoomComponent"
+import getRandomText from "../plugins/getRandomText"
 
 export default function Main() {
 	const [state, setState]=useState({
@@ -10,16 +11,22 @@ export default function Main() {
 		roomComponent: false
 	})
 	const [roomName, setRoomName]=useState<string>('')
+	const [user, setUser]=useState<string>('Terra Name')
 
 	function actionCreateRoomComponent(room: string) {
-		setRoomName(room)
+		if (room==='') {
+			setRoomName(() => getRandomText(9))
+		} else {
+			setRoomName(room)
+		}
 		setState({
 			createrRoomComponent: false,
 			createdNameCompnonent: true,
 			roomComponent: false
 		})
 	}
-	function actionCreateNameComponent() {
+	function actionCreateNameComponent(user: string) {
+		setUser(user)
 		setState({
 			createrRoomComponent: false,
 			createdNameCompnonent: false,
@@ -30,7 +37,7 @@ export default function Main() {
 		<div className="main">
 			{state.createdNameCompnonent? <CreaterNameComponent action={actionCreateNameComponent} />:null}
 			{state.createrRoomComponent? <CreateRoomComponent action={actionCreateRoomComponent} />:null}
-			{state.roomComponent? <RoomComponent roomName={roomName} />:null}
+			{state.roomComponent? <RoomComponent roomName={roomName} user={user} />:null}
 		</div>
 	)
 }
