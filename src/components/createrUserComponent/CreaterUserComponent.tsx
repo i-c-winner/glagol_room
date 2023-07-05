@@ -4,10 +4,10 @@ import { TextField } from "@mui/material"
 import { Button } from '@mui/material'
 import { useTheme } from "@mui/material/styles"
 
-export default function CreaterNameComponent(props: any) {
+export default function CreaterUserComponent(props: any) {
 	const theme=useTheme()
-	const refName=useRef<HTMLInputElement>(null)
-	const [name, setName]=useState<string|undefined>(undefined)
+	const refUser=useRef<HTMLInputElement>(null)
+	const [user, setUser]=useState<string|undefined>(undefined)
 	const stylesInput={
 		backgroundColor: theme.palette.background.paper,
 		margin: '0 auto 20px',
@@ -29,12 +29,12 @@ export default function CreaterNameComponent(props: any) {
 		flexFlow: 'column'
 	}
 	function switcher() {
-		props.action(name)
+		props.action(user)
 
 	}
-	function changeName() {
-		setName(() => {
-			return refName.current!==undefined? refName.current?.value:undefined
+	function changeUser() {
+		setUser(() => {
+			return refUser.current!==undefined? refUser.current?.value:undefined
 		})
 	}
 	return (
@@ -53,14 +53,14 @@ export default function CreaterNameComponent(props: any) {
 				}}
 			>
 				<TextField
-					onChange={changeName}
-					inputRef={refName}
+					onChange={changeUser}
+					inputRef={refUser}
 					sx={stylesInput}
 					id="outlined-basic" label="Outlined" variant="outlined" />
 				<Button
 					onClick={switcher}
 					color="primary"
-					variant="contained">Create Name</Button>
+					variant="contained">Create User</Button>
 			</Box>
 
 		</Box>

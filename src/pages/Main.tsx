@@ -1,6 +1,6 @@
 import { useState } from "react"
 import CreateRoomComponent from "../components/createrRoomComponent/CreateRoomComponent"
-import CreaterNameComponent from "../components/createrNameComponent/CreaterNameComponent"
+import CreaterNameComponent from "../components/createrUserComponent/CreaterUserComponent"
 import RoomComponent from "../components/roomComponent/RoomComponent"
 import getRandomText from "../plugins/getRandomText"
 import { ThemeProvider } from "@emotion/react"
