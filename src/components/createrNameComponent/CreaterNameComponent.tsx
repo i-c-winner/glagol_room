@@ -2,9 +2,10 @@ import { useRef, useState } from 'react'
 import { Box } from "@mui/material"
 import { TextField } from "@mui/material"
 import { Button } from '@mui/material'
-import theme from "../../Ui/themes/theme"
+import { useTheme } from "@mui/material/styles"
 
 export default function CreaterNameComponent(props: any) {
+	const theme=useTheme()
 	const refName=useRef<HTMLInputElement>(null)
 	const [name, setName]=useState<string|undefined>(undefined)
 	const stylesInput={

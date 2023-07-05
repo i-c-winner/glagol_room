@@ -3,8 +3,11 @@ import CreateRoomComponent from "../components/createrRoomComponent/CreateRoomCo
 import CreaterNameComponent from "../components/createrNameComponent/CreaterNameComponent"
 import RoomComponent from "../components/roomComponent/RoomComponent"
 import getRandomText from "../plugins/getRandomText"
+import { ThemeProvider } from "@emotion/react"
+import { darkTheme } from "../Ui/themes/theme"
 
 export default function Main() {
+	const [theme, setTheme]=useState(darkTheme)
 	const [state, setState]=useState({
 		createrRoomComponent: true,
 		createdNameCompnonent: false,
@@ -34,10 +37,13 @@ export default function Main() {
 		})
 	}
 	return (
-		<div className="main">
-			{state.createdNameCompnonent? <CreaterNameComponent action={actionCreateNameComponent} />:null}
-			{state.createrRoomComponent? <CreateRoomComponent action={actionCreateRoomComponent} />:null}
-			{state.roomComponent? <RoomComponent roomName={roomName} user={user} />:null}
-		</div>
+		<ThemeProvider theme={theme}>
+			<div className="main">
+				{state.createdNameCompnonent? <CreaterNameComponent action={actionCreateNameComponent} />:null}
+				{state.createrRoomComponent? <CreateRoomComponent action={actionCreateRoomComponent} />:null}
+				{state.roomComponent? <RoomComponent roomName={roomName} user={user} />:null}
+			</div>
+		</ThemeProvider>
+
 	)
 }
