@@ -1,7 +1,8 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { RouterProvider } from "react-router-dom"
+import route from "./route/route"
 
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-	<p>Proba</p>
+	<RouterProvider router={route} />
 )
