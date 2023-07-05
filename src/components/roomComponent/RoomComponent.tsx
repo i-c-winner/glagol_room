@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default function RoomComponent() {
+export default function RoomComponent(props: any) {
 	return (
-		<div>RoomComponent</div>
+		<div>RoomComponent   {props.roomName}</div>
 	)
 }

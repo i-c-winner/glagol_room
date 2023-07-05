@@ -4,12 +4,22 @@ import CreaterNameComponent from "../components/createrNameComponent/CreaterName
 import RoomComponent from "../components/roomComponent/RoomComponent"
 
 export default function Main() {
-	const [ state, setState ]=useState({
+	const [state, setState]=useState({
 		createrRoomComponent: true,
 		createdNameCompnonent: false,
 		roomComponent: false
 	})
-	function actionCreateRoomComponent() {
+	const [roomName, setRoomName]=useState<string>('')
+
+	function actionCreateRoomComponent(room: string) {
+		setRoomName(room)
+		setState({
+			createrRoomComponent: false,
+			createdNameCompnonent: true,
+			roomComponent: false
+		})
+	}
+	function actionCreateNameComponent() {
 		setState({
 			createrRoomComponent: false,
 			createdNameCompnonent: false,
@@ -18,9 +28,9 @@ export default function Main() {
 	}
 	return (
 		<div className="main">
-			{state.createdNameCompnonent? <CreaterNameComponent />:null}
+			{state.createdNameCompnonent? <CreaterNameComponent action={actionCreateNameComponent} />:null}
 			{state.createrRoomComponent? <CreateRoomComponent action={actionCreateRoomComponent} />:null}
-			{state.roomComponent? <RoomComponent />:null}
+			{state.roomComponent? <RoomComponent roomName={roomName} />:null}
 		</div>
 	)
 }

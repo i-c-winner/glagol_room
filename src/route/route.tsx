@@ -3,6 +3,10 @@ import Main from "../pages/Main";
 
 const route=createBrowserRouter([
 	{
+		path: '/:room',
+		element: <Main />
+	},
+	{
 		path: '/',
 		element: <Main />
 	}
