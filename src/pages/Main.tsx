@@ -7,7 +7,6 @@ import { ThemeProvider } from "@emotion/react"
 import { darkTheme } from "../Ui/themes/theme"
 
 export default function Main() {
-	console.log(window.glagol);
 	const [theme, setTheme]=useState(darkTheme)
 	const [state, setState]=useState({
 		createrRoomComponent: true,

@@ -1,8 +1,8 @@
 export {}
 declare global {
 	var glagol: {
-		XMPPClient: Promise,
+		connection: Promise,
 		peerConnection: RTCPeerConnection,
-		stream: Promise<unknown>
 	}
 }
+
