@@ -1,7 +1,8 @@
-import ReactDOM from 'react-dom/client'
+import ReactDOM from 'react-dom'
 import { RouterProvider } from "react-router-dom"
 import route from "./route/route"
+const container=(document.getElementById('root'))
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-	<RouterProvider router={route} ></RouterProvider>
-)
+ReactDOM.render(<RouterProvider router={route} />
+	, container)
+
