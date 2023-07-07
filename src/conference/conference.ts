@@ -2,6 +2,7 @@
 import * as strophe from 'strophe.js';
 import enablingHandlersPeerConnection from "./enablingHandlersPeerConnection"
 import setRegister from './register'
+import { Stream } from "stream";
 
 setRegister(strophe)
 const connection=new Promise((resolve, reject) => {
@@ -13,12 +14,27 @@ const peerConnection=new RTCPeerConnection({
 		urls: 'stun:stun.l.google.com:19302'
 	}]
 })
+function codingMessage(message: unknown) {
+	return encodeURI(JSON.stringify(message))
+}
+
+function getMedia() {
+	navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((mediaStream: MediaStream) => {
+		mediaStream.getTracks().forEach((track: MediaStreamTrack) => {
+			peerConnection.addTrack(track)
+		})
+		peerConnection.createOffer().then((offer: RTCOfferAnswerOptions) => {
+			peerConnection.setLocalDescription(offer)
+		})
+	})
+}
+
 connection.then((connection: any) => {
 	const callbackRegistry=(status: any) => {
 		if (status===strophe.Strophe.Status.REGISTER) {
 			// fill out the fields
-			connection.register.fields.username='uiuidi';
-			connection.register.fields.password='esdfsf';
+			connection.register.fields.username='name';
+			connection.register.fields.password='pas';
 			// calling submit will continue the registration process
 			connection.register.submit();
 		} else if (status===strophe.Strophe.Status.REGISTERED) {
@@ -26,12 +42,17 @@ connection.then((connection: any) => {
 			// calling login will authenticate the registered JID.
 			connection.authenticate();
 		} else if (status===strophe.Strophe.Status.CONFLICT) {
+			connection.connect("name@prosolen.net", 'pas', () => {
+				getMedia()
+			})
 			console.info("Contact already existed!");
 		} else if (status===strophe.Strophe.Status.NOTACCEPTABLE) {
 			console.info("Registration form not properly filled out.")
 		} else if (status===strophe.Strophe.Status.REGIFAIL) {
 			console.info("The Server does not support In-Band Registration")
 		} else if (status===strophe.Strophe.Status.CONNECTED) {
+			console.info('connected OK');
+			getMedia()
 		}
 	}
 	connection.register.connect("@prosolen.net", callbackRegistry)
