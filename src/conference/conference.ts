@@ -16,6 +16,7 @@ const peerConnection=new RTCPeerConnection({
 window.glagol={
 	connection,
 	peerConnection,
-	strophe: strophe
+	strophe: strophe,
+	roomDomain: 'conference.prosolen.net'
 }
 enablingHandlersPeerConnection()

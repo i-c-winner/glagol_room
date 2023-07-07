@@ -14,29 +14,22 @@ class ConferenceMaster {
 		return encodeURI(JSON.stringify(message))
 	}
 
-	doSignaling() {
-		const locDescription=this.codingMessage(this.peerConnection.localDescription)
-		const message=new this.strophe.Strophe.Builder('message', {
-			to: `${this.roomName}@conference.prosolen.net/focus`,
-			type: 'chat',
-		}).c('body').t(locDescription)
-		console.log(message);
-		this.connection.send(message)
-	}
 	doSignalingCandidate(event: RTCPeerConnectionIceEvent) {
 		const message=new this.strophe.Strophe.Builder('message', {
 			to: `${this.roomName}@conference.prosolen.net/focus`,
-			type: 'chat'
 		}).c('body').t(btoa(JSON.stringify({ "candidate": event.candidate })))
-		console.log(message);
+		console.log(message, 'signaling');
 		this.connection.send(message)
 	}
 	roomOn() {
-		const { userNode }=window.glagol
-		// var pres = $pres({to: roomName+'@'+roomDomain+'/'+XMPP.userNode}).c("x", {xmlns: XMPP.NS_MUC})
-		// XMPP.connection.send(pres);
-		// console.log('PRESENCE to start or join conference sent')
-		console.info(this.roomName, this.connection, userNode);
+		const { roomName, userNode, strophe, roomDomain }=window.glagol
+		const message=new strophe.Strophe.Builder('pres', {
+			to: `${roomName}@${roomDomain}/${userNode}`
+		}).c('x', {
+			xmlns: 'http://jabber.org/protocol/muc'
+		})
+		console.info(message);
+		this.connection.send(message)
 	}
 	handlerStopheMessage() {
 		this.connection.addHandler(this.handlerMessage)
