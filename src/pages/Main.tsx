@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import CreateRoomComponent from "../components/createrRoomComponent/CreateRoomComponent"
 import CreaterNameComponent from "../components/createrUserComponent/CreaterUserComponent"
 import RoomComponent from "../components/roomComponent/RoomComponent"
@@ -7,6 +7,7 @@ import { ThemeProvider } from "@emotion/react"
 import { darkTheme } from "../Ui/themes/theme"
 
 export default function Main() {
+
 	const [theme, setTheme]=useState(darkTheme)
 	const [state, setState]=useState({
 		createrRoomComponent: true,

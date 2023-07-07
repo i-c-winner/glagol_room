@@ -18,15 +18,10 @@ class ConferenceMaster {
 			to: 'admin_cs@prosolen.net',
 			type: 'chat'
 		}).c('body').t(locDescription)
+		console.info(message);
 		this.connection.send(message)
 	}
-	// doSignaling=(...args: [...any[]]) => {
-	// 	const message=new Strophe.Builder('message', {
-	// 		to: 'admin_cs@prosolen.net',
-	// 		type: 'chat'
-	// 	}).c('body').t(args[0][0])
-	// 	this.connection.send(message)
-	// }
+
 }
 
 export default new ConferenceMaster()

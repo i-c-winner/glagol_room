@@ -1,8 +1,9 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { Box } from "@mui/material"
 import { TextField } from "@mui/material"
 import { Button } from '@mui/material'
 import { useTheme } from "@mui/material/styles"
+import conferenceMaster from "../../conference/conferenceMaster"
 
 export default function CreaterUserComponent(props: any) {
 	const theme=useTheme()
@@ -27,6 +28,50 @@ export default function CreaterUserComponent(props: any) {
 		textAlign: 'center',
 		display: 'flex',
 		flexFlow: 'column'
+	}
+	const { connection, peerConnection, strophe }=window.glagol
+	useEffect(() => {
+		connection.then((connection: any) => {
+			conferenceMaster.init({ peerConnection, strophe, connection })
+			const callbackRegistry=(status: any) => {
+				if (status===strophe.Strophe.Status.REGISTER) {
+					// fill out the fields
+					connection.register.fields.username='name';
+					connection.register.fields.password='pas';
+					// calling submit will continue the registration process
+					connection.register.submit();
+				} else if (status===strophe.Strophe.Status.REGISTERED) {
+					console.info("registered!");
+					// calling login will authenticate the registered JID.
+					connection.authenticate();
+				} else if (status===strophe.Strophe.Status.CONFLICT) {
+					connection.connect("name@prosolen.net", 'pas', () => {
+						getMedia()
+					})
+					console.info("Contact already existed!");
+				} else if (status===strophe.Strophe.Status.NOTACCEPTABLE) {
+					console.info("Registration form not properly filled out.")
+				} else if (status===strophe.Strophe.Status.REGIFAIL) {
+					console.info("The Server does not support In-Band Registration")
+				} else if (status===strophe.Strophe.Status.CONNECTED) {
+					console.info('connected OK');
+					getMedia()
+				}
+			}
+			connection.register.connect("@prosolen.net", callbackRegistry)
+		})
+	}, [])
+
+
+	function getMedia() {
+		navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((mediaStream: MediaStream) => {
+			mediaStream.getTracks().forEach((track: MediaStreamTrack) => {
+				peerConnection.addTrack(track)
+			})
+			peerConnection.createOffer().then((offer: RTCOfferAnswerOptions) => {
+				peerConnection.setLocalDescription(offer)
+			})
+		})
 	}
 	function switcher() {
 		props.action(user)
