@@ -6,7 +6,8 @@ type Glagol={
 	strophe: any,
 	domain: string,
 	userNode: string,
-	roomDomain: string
+	roomDomain: string,
+	roomName: string
 }
 declare global {
 	var glagol: Partial<Glagol>

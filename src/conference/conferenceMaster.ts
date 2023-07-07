@@ -3,12 +3,16 @@ class ConferenceMaster {
 	strophe: any
 	connection: any
 	roomName: string
+	userNode: string|undefined
+	roomDomain: string|undefined
 
 	init(params: { peerConnection: RTCPeerConnection, strophe: any, connection: any }) {
 		this.peerConnection=params.peerConnection
 		this.strophe=params.strophe
 		this.connection=params.connection
-		this.roomName=window.glagol.roomName
+		this.roomName=window.glagol.roomName??'testroom'
+		this.userNode=window.glagol.userNode
+		this.roomDomain=window.glagol.roomDomain
 	}
 	codingMessage(message: unknown) {
 		return encodeURI(JSON.stringify(message))
@@ -17,6 +21,7 @@ class ConferenceMaster {
 	doSignalingCandidate(event: RTCPeerConnectionIceEvent) {
 		const message=new this.strophe.Strophe.Builder('message', {
 			to: `${this.roomName}@conference.prosolen.net/focus`,
+			type: 'chat'
 		}).c('body').t(btoa(JSON.stringify({ "candidate": event.candidate })))
 		console.log(message, 'signaling');
 		this.connection.send(message)
