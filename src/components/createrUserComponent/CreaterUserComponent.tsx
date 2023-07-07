@@ -57,7 +57,7 @@ export default function CreaterUserComponent(props: any) {
 					console.info("The Server does not support In-Band Registration")
 				} else if (status===strophe.Strophe.Status.CONNECTED) {
 					console.info('connected OK');
-					processingAfterConnected()
+					// processingAfterConnected()
 				}
 			}
 			connection.register.connect("prosolen.net", callbackRegistry)
@@ -65,19 +65,19 @@ export default function CreaterUserComponent(props: any) {
 	}, [])
 
 
-	function processingAfterConnected() {
-		conferenceMaster.roomOn()
-		conferenceMaster.handlerStopheMessage()
-		navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((mediaStream: MediaStream) => {
-			mediaStream.getTracks().forEach((track: MediaStreamTrack) => {
-				peerConnection.addTrack(track)
-			})
-			peerConnection.createOffer().then((offer: RTCOfferAnswerOptions) => {
-				peerConnection.setLocalDescription(offer)
-			})
-		})
+	// function processingAfterConnected() {
+	// 	conferenceMaster.handlerStopheMessage()
+	// 	conferenceMaster.roomOn()
+	// 	navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((mediaStream: MediaStream) => {
+	// 		mediaStream.getTracks().forEach((track: MediaStreamTrack) => {
+	// 			peerConnection.addTrack(track)
+	// 		})
+	// 		peerConnection.createOffer().then((offer: RTCOfferAnswerOptions) => {
+	// 			peerConnection.setLocalDescription(offer)
+	// 		})
+	// 	})
 
-	}
+	// }
 
 	function switcher() {
 		props.action(user)

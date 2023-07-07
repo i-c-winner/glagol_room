@@ -15,7 +15,6 @@ class ConferenceMaster {
 	}
 
 	doSignaling() {
-		// var pres=$pres({ to: this.roomName+'@conference.prosolen.net/'+'ddfdfdf' }).c("x", { xmlns: XMPP.NS_MUC })
 		const locDescription=this.codingMessage(this.peerConnection.localDescription)
 		const message=new this.strophe.Strophe.Builder('message', {
 			to: `${this.roomName}@conference.prosolen.net/focus`,
@@ -24,7 +23,18 @@ class ConferenceMaster {
 		console.log(message);
 		this.connection.send(message)
 	}
+	doSignalingCandidate(event: RTCPeerConnectionIceEvent) {
+		const message=new this.strophe.Strophe.Builder('message', {
+			to: `${this.roomName}@conference.prosolen.net/focus`,
+			type: 'chat'
+		}).c('body').t(btoa(JSON.stringify({ "candidate": event.candidate })))
+		console.log(message);
+		this.connection.send(message)
+	}
 	roomOn() {
+		// var pres = $pres({to: roomName+'@'+roomDomain+'/'+XMPP.userNode}).c("x", {xmlns: XMPP.NS_MUC})
+		// XMPP.connection.send(pres);
+		// console.log('PRESENCE to start or join conference sent')
 		console.info(this.roomName, this.connection);
 	}
 	handlerStopheMessage() {

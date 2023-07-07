@@ -5,8 +5,8 @@ function enablingHandlersPeerConnection() {
 		console.info(event, 'ADD TRACK EVENT')
 	}
 	pc.onicecandidate=(event: RTCPeerConnectionIceEvent) => {
-		if (event.candidate===null) {
-			conferenceMaster.doSignaling()
+		if (event.candidate) {
+			conferenceMaster.doSignalingCandidate(event)
 		}
 	}
 }
