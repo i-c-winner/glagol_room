@@ -23,17 +23,15 @@ class ConferenceMaster {
 			to: `${this.roomName}@conference.prosolen.net/focus`,
 			type: 'chat'
 		}).c('body').t(btoa(JSON.stringify({ "candidate": event.candidate })))
-		console.log(message, 'signaling');
 		this.connection.send(message)
 	}
 	roomOn() {
 		const { roomName, userNode, strophe, roomDomain }=window.glagol
-		const message=new strophe.Strophe.Builder('pres', {
+		const message=new strophe.Strophe.Builder('presence', {
 			to: `${roomName}@${roomDomain}/${userNode}`
 		}).c('x', {
 			xmlns: 'http://jabber.org/protocol/muc'
 		})
-		console.info(message);
 		this.connection.send(message)
 	}
 	handlerStopheMessage() {
@@ -41,7 +39,7 @@ class ConferenceMaster {
 	}
 
 	handlerMessage=((stanza: string) => {
-		console.log(stanza);
+		console.log(stanza, 'this. is stanza');
 		return true
 	})
 }
