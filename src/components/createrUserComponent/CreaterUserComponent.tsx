@@ -4,8 +4,11 @@ import { TextField } from "@mui/material"
 import { Button } from '@mui/material'
 import { useTheme } from "@mui/material/styles"
 import conferenceMaster from "../../conference/conferenceMaster"
+import getRandomText from "../../plugins/getRandomText"
 
 export default function CreaterUserComponent(props: any) {
+	window.glagol.roomName=props.roomName
+	window.glagol.domain="conference.prosolen.net"
 	const theme=useTheme()
 	const refUser=useRef<HTMLInputElement>(null)
 	const [user, setUser]=useState<string|undefined>(undefined)
@@ -36,8 +39,8 @@ export default function CreaterUserComponent(props: any) {
 			const callbackRegistry=(status: any) => {
 				if (status===strophe.Strophe.Status.REGISTER) {
 					// fill out the fields
-					connection.register.fields.username='name';
-					connection.register.fields.password='pas';
+					connection.register.fields.username=getRandomText(5);
+					connection.register.fields.password=getRandomText(9);
 					// calling submit will continue the registration process
 					connection.register.submit();
 				} else if (status===strophe.Strophe.Status.REGISTERED) {
@@ -46,7 +49,6 @@ export default function CreaterUserComponent(props: any) {
 					connection.authenticate();
 				} else if (status===strophe.Strophe.Status.CONFLICT) {
 					connection.connect("name@prosolen.net", 'pas', () => {
-						getMedia()
 					})
 					console.info("Contact already existed!");
 				} else if (status===strophe.Strophe.Status.NOTACCEPTABLE) {
@@ -55,15 +57,17 @@ export default function CreaterUserComponent(props: any) {
 					console.info("The Server does not support In-Band Registration")
 				} else if (status===strophe.Strophe.Status.CONNECTED) {
 					console.info('connected OK');
-					getMedia()
+					processingAfterConnected()
 				}
 			}
-			connection.register.connect("@prosolen.net", callbackRegistry)
+			connection.register.connect("prosolen.net", callbackRegistry)
 		})
 	}, [])
 
 
-	function getMedia() {
+	function processingAfterConnected() {
+		conferenceMaster.roomOn()
+		conferenceMaster.handlerStopheMessage()
 		navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((mediaStream: MediaStream) => {
 			mediaStream.getTracks().forEach((track: MediaStreamTrack) => {
 				peerConnection.addTrack(track)
@@ -72,10 +76,11 @@ export default function CreaterUserComponent(props: any) {
 				peerConnection.setLocalDescription(offer)
 			})
 		})
+
 	}
+
 	function switcher() {
 		props.action(user)
-
 	}
 	function changeUser() {
 		setUser(() => {

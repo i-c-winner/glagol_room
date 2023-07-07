@@ -1,9 +1,12 @@
 export {}
+
+type Glaol={
+	connection: Promise,
+	peerConnection: RTCPeerConnection,
+	strophe: any,
+	domain: string
+}
 declare global {
-	var glagol: {
-		connection: Promise,
-		peerConnection: RTCPeerConnection,
-		strophe: any
-	}
+	var glagol: Partial<Glagol>
 }
 

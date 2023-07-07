@@ -1,5 +1,6 @@
 import conferenceMaster from "./conferenceMaster";
-function enablingHandlersPeerConnection(pc: RTCPeerConnection) {
+function enablingHandlersPeerConnection() {
+	const pc=window.glagol.peerConnection
 	pc.ontrack=(event: any) => {
 		console.info(event, 'ADD TRACK EVENT')
 	}
