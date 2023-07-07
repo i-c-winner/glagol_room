@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		"strictPropertyInitialization": false,
 		"allowJs": true,
 		"esModuleInterop": true,
 		"target": "ES2020",
