@@ -9,9 +9,9 @@ export default function RoomComponent(props: any) {
 		conferenceMaster.roomOn()
 		navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((mediaStream: MediaStream) => {
 			mediaStream.getTracks().forEach((track: MediaStreamTrack) => {
-				peerConnection.addTrack(track)
+				if (peerConnection) peerConnection.addTrack(track)
 			})
-			peerConnection.createOffer().then((offer: RTCOfferAnswerOptions) => {
+			if (peerConnection) peerConnection.createOffer().then((offer: RTCOfferAnswerOptions) => {
 				peerConnection.setLocalDescription(offer)
 			})
 		})

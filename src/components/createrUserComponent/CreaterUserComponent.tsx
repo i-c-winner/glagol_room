@@ -38,7 +38,7 @@ export default function CreaterUserComponent(props: any) {
 		const userNode=getRandomText(5)
 		const userPassword=getRandomText(9)
 		connection.then((connection: any) => {
-			conferenceMaster.init({ peerConnection, strophe, connection })
+			if (peerConnection) conferenceMaster.init({ peerConnection, strophe, connection })
 			const callbackRegistry=(status: any) => {
 				if (status===strophe.Strophe.Status.REGISTER) {
 					// fill out the fields
