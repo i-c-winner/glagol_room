@@ -32,10 +32,11 @@ class ConferenceMaster {
 		this.connection.send(message)
 	}
 	roomOn() {
+		const { userNode }=window.glagol
 		// var pres = $pres({to: roomName+'@'+roomDomain+'/'+XMPP.userNode}).c("x", {xmlns: XMPP.NS_MUC})
 		// XMPP.connection.send(pres);
 		// console.log('PRESENCE to start or join conference sent')
-		console.info(this.roomName, this.connection);
+		console.info(this.roomName, this.connection, userNode);
 	}
 	handlerStopheMessage() {
 		this.connection.addHandler(this.handlerMessage)

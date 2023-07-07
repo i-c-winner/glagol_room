@@ -12,6 +12,7 @@ export default function CreaterUserComponent(props: any) {
 	const theme=useTheme()
 	const refUser=useRef<HTMLInputElement>(null)
 	const [user, setUser]=useState<string|undefined>(undefined)
+	const [connected, setConnected]=useState(false)
 	const stylesInput={
 		backgroundColor: theme.palette.background.paper,
 		margin: '0 auto 20px',
@@ -34,13 +35,15 @@ export default function CreaterUserComponent(props: any) {
 	}
 	const { connection, peerConnection, strophe }=window.glagol
 	useEffect(() => {
+		const userNode=getRandomText(5)
+		const userPassword=getRandomText(9)
 		connection.then((connection: any) => {
 			conferenceMaster.init({ peerConnection, strophe, connection })
 			const callbackRegistry=(status: any) => {
 				if (status===strophe.Strophe.Status.REGISTER) {
 					// fill out the fields
-					connection.register.fields.username=getRandomText(5);
-					connection.register.fields.password=getRandomText(9);
+					connection.register.fields.username=userNode;
+					connection.register.fields.password=userPassword;
 					// calling submit will continue the registration process
 					connection.register.submit();
 				} else if (status===strophe.Strophe.Status.REGISTERED) {
@@ -57,27 +60,13 @@ export default function CreaterUserComponent(props: any) {
 					console.info("The Server does not support In-Band Registration")
 				} else if (status===strophe.Strophe.Status.CONNECTED) {
 					console.info('connected OK');
-					// processingAfterConnected()
+					window.glagol.userNode=userNode
+					setConnected(true)
 				}
 			}
 			connection.register.connect("prosolen.net", callbackRegistry)
 		})
 	}, [])
-
-
-	// function processingAfterConnected() {
-	// 	conferenceMaster.handlerStopheMessage()
-	// 	conferenceMaster.roomOn()
-	// 	navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((mediaStream: MediaStream) => {
-	// 		mediaStream.getTracks().forEach((track: MediaStreamTrack) => {
-	// 			peerConnection.addTrack(track)
-	// 		})
-	// 		peerConnection.createOffer().then((offer: RTCOfferAnswerOptions) => {
-	// 			peerConnection.setLocalDescription(offer)
-	// 		})
-	// 	})
-
-	// }
 
 	function switcher() {
 		props.action(user)
@@ -108,11 +97,11 @@ export default function CreaterUserComponent(props: any) {
 					sx={stylesInput}
 					id="outlined-basic" label="Outlined" variant="outlined" />
 				<Button
+					disabled={!connected}
 					onClick={switcher}
 					color="primary"
 					variant="contained">Create User</Button>
 			</Box>
-
 		</Box>
 	)
 }
