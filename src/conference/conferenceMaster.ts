@@ -1,4 +1,5 @@
 import handlerPresence from "./handlers/handlerPresence"
+import handlerIq from "./handlers/handlerIq"
 class ConferenceMaster {
 	peerConnection: RTCPeerConnection
 	strophe: any
@@ -38,6 +39,7 @@ class ConferenceMaster {
 	handlerStopheMessage() {
 		this.connection.addHandler(handlerPresence, null, 'presence')
 		this.connection.addHandler(this.handlerMessage, null, 'message')
+		this.connection.addHandler(handlerIq, null, 'iq')
 	}
 
 
