@@ -1,3 +1,4 @@
+import handlerPresence from "./handlers/handlerPresence"
 class ConferenceMaster {
 	peerConnection: RTCPeerConnection
 	strophe: any
@@ -35,11 +36,12 @@ class ConferenceMaster {
 		this.connection.send(message)
 	}
 	handlerStopheMessage() {
-		this.connection.addHandler(this.handlerMessage)
+		this.connection.addHandler(handlerPresence, null, 'presence')
+		this.connection.addHandler(this.handlerMessage, null, 'message')
 	}
 
+
 	handlerMessage=((stanza: string) => {
-		console.log(stanza, 'this. is stanza');
 		return true
 	})
 }

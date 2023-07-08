@@ -18,6 +18,10 @@ export default function RoomComponent(props: any) {
 	}
 
 	useEffect(() => {
+		const { userNode, strophe }=window.glagol
+		console.info(strophe.Strophe.getBareJidFromJid(userNode), userNode);
+
+		console.log();
 		history.replaceState({}, '', props.roomName)
 	}, [])
 	return (

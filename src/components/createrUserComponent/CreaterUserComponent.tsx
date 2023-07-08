@@ -38,6 +38,7 @@ export default function CreaterUserComponent(props: any) {
 		const userNode=getRandomText(5)
 		const userPassword=getRandomText(9)
 		connection.then((connection: any) => {
+			window.glagol.connection=connection
 			if (peerConnection) conferenceMaster.init({ peerConnection, strophe, connection })
 			const callbackRegistry=(status: any) => {
 				if (status===strophe.Strophe.Status.REGISTER) {
