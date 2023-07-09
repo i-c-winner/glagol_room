@@ -3,13 +3,23 @@ import { createSlice } from "@reduxjs/toolkit";
 const sliceGlagol=createSlice({
 	name: 'sliceGlagol',
 	initialState: {
-		connecting: null
+		XMPPConnected: false,
+		send: undefined,
+		peerConnection: undefined
 	},
 	reducers: {
-		setConnection: ((state, action) => {
-			state.connecting=action.payload
+		changeXMPPConnected: ((state) => {
+			state.XMPPConnected=true
+		}),
+		changeSend: ((state, action) => {
+			state.send=action.payload
+		}),
+		setPeerConnection: ((state, action) => {
+			state.peerConnection=action.payload
 		})
-	}
+	},
 })
-export const { setConnection }=sliceGlagol.actions
+
+
+export const { changeXMPPConnected, changeSend, setPeerConnection }=sliceGlagol.actions
 export default sliceGlagol.reducer
