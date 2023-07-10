@@ -39,8 +39,8 @@ export default function Main() {
 	return (
 		<ThemeProvider theme={theme}>
 			<div className="main">
-				{/* {state.createdNameCompnonent? <CreaterNameComponent roomName={roomName} action={actionCreateNameComponent} />:null}
 				{state.createrRoomComponent? <CreateRoomComponent roomName={roomName} action={actionCreateRoomComponent} />:null}
+				{/*	{state.createdNameCompnonent? <CreaterNameComponent roomName={roomName} action={actionCreateNameComponent} />:null}
 				{state.roomComponent? <RoomComponent roomName={roomName} user={user} />:null} */}
 			</div>
 		</ThemeProvider>

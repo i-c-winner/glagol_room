@@ -1,8 +1,8 @@
 class ConferenceMaster {
-	connect: any
+	connection: any
 	peerConnection: any
-	init(connect: any, pc: any) {
-		this.connect=connect
+	init(connection: any, pc: any) {
+		this.connection=connection
 		this.peerConnection=pc
 		this._enablingHandlerPC()
 	}
@@ -16,6 +16,12 @@ class ConferenceMaster {
 				// conferenceMaster.doSignalingCandidate(event)
 			}
 		}
+	}
+	getConnection() {
+		return this.connection
+	}
+	getPeerConnection() {
+		return this.peerConnection
 	}
 }
 
