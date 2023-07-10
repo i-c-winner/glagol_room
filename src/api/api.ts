@@ -7,7 +7,6 @@ const api={
 			resolve(new Strophe.Connection(config.xmppUrls))
 		})
 	},
-	send: (send: any) => send
 }
 
 export default api
