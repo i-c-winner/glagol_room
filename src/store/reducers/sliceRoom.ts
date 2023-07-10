@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import getRandomText from "../../plugins/getRandomText";
 const sliceRoom=createSlice({
-	name: 'createSlice',
+	name: 'sliceRoom',
 	initialState: {
 		nameRoom: getRandomText(5)
 	},
@@ -13,4 +13,4 @@ const sliceRoom=createSlice({
 })
 
 export const { changeNameRoom }=sliceRoom.actions
-export default sliceRoom
+export default sliceRoom.reducer

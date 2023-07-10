@@ -1,10 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import sliceGlagol from "./reducers/sliceGlagol";
+import sliceUser from "./reducers/sliceUser";
+import sliceRoom from "./reducers/sliceRoom";
 import api from "../api/api";
 
 const store=configureStore({
 	reducer: {
-		Glagol: sliceGlagol
+		glagol: sliceGlagol,
+		room: sliceRoom,
+		user: sliceUser
 	},
 	middleware: getDefaultMiddleware =>
 		getDefaultMiddleware({

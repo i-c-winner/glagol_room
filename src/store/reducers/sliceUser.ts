@@ -3,7 +3,7 @@ import getRandomText from "../../plugins/getRandomText";
 
 
 const sliceUser=createSlice({
-	name: 'user',
+	name: 'sliceUser',
 	initialState: {
 		userNode: getRandomText(5),
 		password: getRandomText(8),
@@ -22,4 +22,4 @@ const sliceUser=createSlice({
 )
 
 export const { changeDisplayNode }=sliceUser.actions
-export default sliceUser
+export default sliceUser.reducer
