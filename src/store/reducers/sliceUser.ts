@@ -11,7 +11,7 @@ const sliceUser=createSlice({
 		displayName: ''
 	},
 	reducers: {
-		changeDisplayNode: ((state: any, action: Payload<string>) => {
+		changeDisplayName: ((state: any, action: Payload<string>) => {
 			state.displayName=action.payload
 		}),
 		changeUserNode: ((state: any, action: Payload<string>) => {
@@ -21,5 +21,5 @@ const sliceUser=createSlice({
 }
 )
 
-export const { changeDisplayNode }=sliceUser.actions
+export const { changeDisplayName }=sliceUser.actions
 export default sliceUser.reducer

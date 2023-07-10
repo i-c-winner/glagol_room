@@ -1,12 +1,12 @@
 import { useState } from "react"
-import { useSelector, useDispatch } from "react-redux"
+import { useDispatch } from "react-redux"
 import CreateRoomComponent from "../components/createrRoomComponent/CreateRoomComponent"
 import CreaterNameComponent from "../components/createrNameComponent/CreaterNameComponent"
 import RoomComponent from "../components/roomComponent/RoomComponent"
-import getRandomText from "../plugins/getRandomText"
 import { ThemeProvider } from "@emotion/react"
 import { darkTheme } from "../Ui/themes/theme"
 import { changeNameRoom } from "../store/reducers/sliceRoom"
+import { changeDisplayName } from "../store/reducers/sliceUser"
 
 export default function Main() {
 	const dispatch=useDispatch()
@@ -17,7 +17,6 @@ export default function Main() {
 		roomComponent: false
 	})
 
-	const [user, setUser]=useState<string>('Terra Name')
 
 	function actionCreateRoomComponent(room: string) {
 		if (room!=='') {
@@ -30,7 +29,7 @@ export default function Main() {
 		})
 	}
 	function actionCreateNameComponent(user: string) {
-		setUser(user)
+		dispatch(changeDisplayName(user))
 		setState({
 			createrRoomComponent: false,
 			createdNameCompnonent: false,
@@ -41,8 +40,8 @@ export default function Main() {
 		<ThemeProvider theme={theme}>
 			<div className="main">
 				{state.createrRoomComponent? <CreateRoomComponent action={actionCreateRoomComponent} />:null}
-				{/*	{state.createdNameCompnonent? <CreaterNameComponent roomName={roomName} action={actionCreateNameComponent} />:null}
-				{state.roomComponent? <RoomComponent roomName={roomName} user={user} />:null} */}
+				{state.createdNameCompnonent? <CreaterNameComponent action={actionCreateNameComponent} />:null}
+				{state.roomComponent? <RoomComponent />:null}
 			</div>
 		</ThemeProvider>
 

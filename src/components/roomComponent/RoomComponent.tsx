@@ -1,30 +1,17 @@
 import { useEffect } from "react"
-import conferenceMaster from "../../conference/conferenceMaster"
+import { useSelector } from "react-redux";
 
-export default function RoomComponent(props: any) {
-	processingAfterConnected()
-	function processingAfterConnected() {
-		const { peerConnection }=window.glagol
-		conferenceMaster.handlerStopheMessage()
-		conferenceMaster.roomOn()
-		navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((mediaStream: MediaStream) => {
-			mediaStream.getTracks().forEach((track: MediaStreamTrack) => {
-				if (peerConnection) peerConnection.addTrack(track)
-			})
-			if (peerConnection) peerConnection.createOffer().then((offer: RTCOfferAnswerOptions) => {
-				peerConnection.setLocalDescription(offer)
-			})
-		})
-	}
+export default function RoomComponent() {
+	const { nameRoom }=useSelector((state: any) => {
+		console.log(state.room);
+		return state.room
+	})
 
 	useEffect(() => {
-		const { userNode, strophe }=window.glagol
-		console.info(strophe.Strophe.getBareJidFromJid(userNode), userNode);
-
 		console.log();
-		history.replaceState({}, '', props.roomName)
+		history.replaceState({}, '', nameRoom)
 	}, [])
 	return (
-		<div>RoomComponent   {props.roomName} user: {props.user}</div>
+		<div>RoomComponent</div>
 	)
 }
