@@ -43,6 +43,8 @@ export default function CreaterUserComponent(props: any) {
 			sx={stylesBox}
 		>
 			<Box
+				onSubmit={switcher}
+				component="form"
 				sx={{
 					width: '40%',
 					padding: '25px 10px',

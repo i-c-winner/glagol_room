@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { Button, TextField } from "@mui/material"
 import { Box } from "@mui/material"
+
 import { useTheme } from "@mui/material/styles"
 
 export default function createRoomComponent(props: any) {
@@ -32,6 +33,7 @@ export default function createRoomComponent(props: any) {
 			props.action(room)
 		}
 	}, [])
+
 	function switcher() {
 		props.action(room)
 	}
@@ -41,8 +43,11 @@ export default function createRoomComponent(props: any) {
 	return (
 		<Box
 			sx={stylesBox}
+
 		>
 			<Box
+				onSubmit={switcher}
+				component="form"
 				sx={{
 					width: '40%',
 					padding: '25px 10px',
@@ -54,11 +59,12 @@ export default function createRoomComponent(props: any) {
 				}}
 			>
 				<TextField
-					onChange={changeRoomName}
+
 					inputRef={refRoomName}
 					sx={stylesInput}
 					id="outlined-basic" label="Outlined" variant="outlined" />
 				<Button
+
 					onClick={switcher}
 					color="primary"
 					variant="contained">Create Room</Button>
