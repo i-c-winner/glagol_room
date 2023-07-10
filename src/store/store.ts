@@ -11,7 +11,7 @@ const store=configureStore({
 			// serializableCheck: false,
 			thunk: {
 				extraArgument: {
-					getConnection: api.getConnection
+					getConnection: api.getConnection,
 				}
 			}
 		})

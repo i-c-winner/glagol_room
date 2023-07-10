@@ -1,14 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
-import Main from "../pages/Main";
+import Conference from "../conference/Conference";
 
 const route=createBrowserRouter([
 	{
 		path: '/:room',
-		element: <Main />
+		element: <Conference />
 	},
 	{
 		path: '/',
-		element: <Main />
+		element: <Conference />
 	}
 ]
 )

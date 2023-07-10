@@ -4,8 +4,9 @@ const sliceGlagol=createSlice({
 	name: 'sliceGlagol',
 	initialState: {
 		XMPPConnected: false,
-		send: undefined,
-		peerConnection: undefined
+		send: null,
+		peerConnection: null,
+		connection: null
 	},
 	reducers: {
 		changeXMPPConnected: ((state) => {
@@ -16,10 +17,13 @@ const sliceGlagol=createSlice({
 		}),
 		setPeerConnection: ((state, action) => {
 			state.peerConnection=action.payload
+		}),
+		setConnection: ((state, action) => {
+			state.connection=action.payload
 		})
 	},
 })
 
 
-export const { changeXMPPConnected, changeSend, setPeerConnection }=sliceGlagol.actions
+export const { changeXMPPConnected, changeSend, setPeerConnection, setConnection }=sliceGlagol.actions
 export default sliceGlagol.reducer
