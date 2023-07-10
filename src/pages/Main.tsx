@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import CreateRoomComponent from "../components/createrRoomComponent/CreateRoomComponent"
-import CreaterNameComponent from "../components/createrUserComponent/CreaterUserComponent"
+import CreaterNameComponent from "../components/createrNameComponent/CreaterNameComponent"
 import RoomComponent from "../components/roomComponent/RoomComponent"
 import getRandomText from "../plugins/getRandomText"
 import { ThemeProvider } from "@emotion/react"
