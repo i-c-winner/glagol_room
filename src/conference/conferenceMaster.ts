@@ -17,7 +17,6 @@ class ConferenceMaster {
 	static instance: any
 
 	constructor() {
-		console.log(ConferenceMaster.instance);
 		if (ConferenceMaster.instance) {
 			return ConferenceMaster.instance
 		}
@@ -51,7 +50,6 @@ class ConferenceMaster {
 			console.info(event, 'ADD TRACK EVENT')
 		}
 		this.peerConnection.onicecandidate=(event: RTCPeerConnectionIceEvent) => {
-
 			if (event.candidate) {
 				this.doSignalingCandidate(event)
 			}
@@ -62,17 +60,15 @@ class ConferenceMaster {
 	}
 
 	doSignalingCandidate(event: RTCPeerConnectionIceEvent) {
-		console.info(this);
 		const message=new this.Strophe.Builder('message', {
 			to: `${this.roomName}@conference.prosolen.net/focus`,
 			type: 'chat'
 		}).c('body').t(btoa(JSON.stringify({ "candidate": event.candidate })))
-		console.info(message);
 		this.connection.send(message)
 	}
 	roomOn() {
 		const message=new this.Strophe.Builder('presence', {
-			to: `${this.roomName}@${this.domain}/${this.node}`
+			to: `${this.roomName}@conference.prosolen.net/${this.node}`
 		}).c('x', {
 			xmlns: 'http://jabber.org/protocol/muc'
 		})
@@ -80,7 +76,13 @@ class ConferenceMaster {
 
 	}
 	handlerStopheMessage=() => {
-		this.connection.addHandler(handlerPresence, null, 'presence')
+		handlerPresence({
+			Strophe: this.Strophe,
+			connection: this.connection,
+			node: this.node,
+			domain: this.domain,
+			roomName: this.getRoomName
+		})
 		this.connection.addHandler(handlerIq, null, 'iq')
 		this.connection.addHandler(handlerMessage)
 	}
@@ -90,16 +92,16 @@ class ConferenceMaster {
 		return true
 	})
 
-	getConnection() {
+	getConnection=() => {
 		return this.connection
 	}
-	getPeerConnection() {
+	getPeerConnection=() => {
 		return this.peerConnection
 	}
-	getStrophe() {
+	getStrophe=() => {
 		return this.Strophe
 	}
-	getRoomName() {
+	getRoomName=() => {
 		return this.roomName
 	}
 }

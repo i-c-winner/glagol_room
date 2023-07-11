@@ -19,11 +19,10 @@ function RoomComponent() {
 	const { XMPPConnected }=useSelector((state: any) => state.glagol)
 	useEffect(() => {
 		if (XMPPConnected) {
-			startWebRTC()
+			conferenceMaster.roomOn()
+			// startWebRTC()
 		}
 	}, [XMPPConnected])
-	console.info(XMPPConnected);
-
 
 	useEffect(() => {
 		history.replaceState({}, '', conferenceMaster.getRoomName())
