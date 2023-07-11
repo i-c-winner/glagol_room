@@ -34,6 +34,11 @@ export default function Main() {
 	}
 	function actionCreateNameComponent(user: string) {
 		dispatch(changeDisplayName(user))
+		if (user==='') {
+			conferenceMaster.setDisplayName('unknown User')
+		} else {
+			conferenceMaster.setDisplayName(user)
+		}
 		setState({
 			createrRoomComponent: false,
 			createdNameCompnonent: false,

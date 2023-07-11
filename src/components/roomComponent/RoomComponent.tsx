@@ -20,7 +20,7 @@ function RoomComponent() {
 	useEffect(() => {
 		if (XMPPConnected) {
 			conferenceMaster.roomOn()
-			// startWebRTC()
+			startWebRTC()
 		}
 	}, [XMPPConnected])
 

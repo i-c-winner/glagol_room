@@ -15,6 +15,7 @@ class ConferenceMaster {
 	roomName: string
 	localStream: null|MediaStream
 	static instance: any
+	displayName: string
 
 	constructor() {
 		if (ConferenceMaster.instance) {
@@ -38,13 +39,7 @@ class ConferenceMaster {
 		this.domain=this.Strophe.getDomainFromJid(this.connection.jid)
 		this.handlerStopheMessage()
 	}
-	setRoomName(room: string) {
-		this.roomName=room
-	}
 
-	setStream(stream: MediaStream) {
-		this.localStream=stream
-	}
 	_enablingHandlerPC() {
 		this.peerConnection.ontrack=(event: any) => {
 			console.info(event, 'ADD TRACK EVENT')
@@ -83,15 +78,35 @@ class ConferenceMaster {
 			domain: this.domain,
 			roomName: this.getRoomName
 		})
-		this.connection.addHandler(handlerIq, null, 'iq')
-		this.connection.addHandler(handlerMessage)
+		handlerIq({
+			Strophe: this.Strophe,
+			connection: this.connection,
+			node: this.node,
+			domain: this.domain,
+			roomName: this.getRoomName,
+			displayName: this.getDisplayName
+		})
+		this.connection.addHandler(handlerMessage, null, 'message')
 	}
 
 
 	handlerMessage=((stanza: string) => {
 		return true
 	})
+	setRoomName(room: string) {
+		this.roomName=room
+	}
 
+	setStream=(stream: MediaStream) => {
+		this.localStream=stream
+	}
+	setDisplayName(name: string) {
+		debugger
+		this.displayName=name
+	}
+	getDisplayName=() => {
+		return this.displayName
+	}
 	getConnection=() => {
 		return this.connection
 	}

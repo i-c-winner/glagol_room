@@ -17,7 +17,7 @@ function handlerPresence(params: any) {
 				console.log('creater Room');
 				const message=new Strophe.Builder('iq', {
 					id: node,
-					to: `${roomName()}@conference.${domain}/${node}`,
+					to: `${roomName()}@conference.${domain}`,
 					type: 'set'
 				}).c('query', {
 					xmlns: 'http://jabber.org/protocol/muc#owner'
