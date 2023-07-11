@@ -47,15 +47,13 @@ class ConferenceMaster {
 		this.localStream=stream
 	}
 	_enablingHandlerPC() {
-		console.log(this.peerConnection);
 		this.peerConnection.ontrack=(event: any) => {
 			console.info(event, 'ADD TRACK EVENT')
 		}
 		this.peerConnection.onicecandidate=(event: RTCPeerConnectionIceEvent) => {
-			console.log(event);
+
 			if (event.candidate) {
-				console.info(event);
-				// conferenceMaster.doSignalingCandidate(event)
+				this.doSignalingCandidate(event)
 			}
 		}
 	}
@@ -63,12 +61,13 @@ class ConferenceMaster {
 		return encodeURI(JSON.stringify(message))
 	}
 
-
 	doSignalingCandidate(event: RTCPeerConnectionIceEvent) {
+		console.info(this);
 		const message=new this.Strophe.Builder('message', {
 			to: `${this.roomName}@conference.prosolen.net/focus`,
 			type: 'chat'
 		}).c('body').t(btoa(JSON.stringify({ "candidate": event.candidate })))
+		console.info(message);
 		this.connection.send(message)
 	}
 	roomOn() {
