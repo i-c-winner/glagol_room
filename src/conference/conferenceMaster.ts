@@ -13,9 +13,14 @@ class ConferenceMaster {
 	domain: string
 	roomName: string
 	localStream: null|MediaStream
+	static instance: any
 
 	constructor() {
+		if (ConferenceMaster.instance) {
+			return ConferenceMaster.instance
+		}
 		this.localStream=null
+		ConferenceMaster.instance=this
 	}
 
 	init(connection: any, pc: any) {
