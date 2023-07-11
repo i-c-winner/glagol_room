@@ -1,7 +1,6 @@
-import conferenceMaster from "../conferenceMaster";
 const handlerPresence=(stanza: any) => {
+	debugger
 	if (this!==undefined) console.log(this.connection)
-	const Strophe=conferenceMaster.getStrophe()
 	console.log(this);
 	debugger
 	const from=stanza.getAttribute('from').split('/')[1]

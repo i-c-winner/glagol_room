@@ -45,7 +45,7 @@ export default function Conference() {
 					})
 					dispatch(changeXMPPConnected())
 
-					conferenceMaster.init(connection, pc, roomName)
+					conferenceMaster.init(connection, pc)
 
 					// do something after successful authentication
 				} else {

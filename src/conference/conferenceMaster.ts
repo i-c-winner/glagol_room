@@ -17,8 +17,8 @@ class ConferenceMaster {
 	constructor() {
 		this.localStream=null
 	}
-	init(connection: any, pc: any, roomName: string) {
-		this.roomName=roomName
+
+	init(connection: any, pc: any) {
 		this.connection=connection
 		this.peerConnection=pc
 		this._enablingHandlerPC()
@@ -30,6 +30,11 @@ class ConferenceMaster {
 		this.full=this.Strophe.getBareJidFromJid(this.connection.jid)
 		this.resorce=this.Strophe.getResourceFromJid(this.connection.jid)
 		this.domain=this.Strophe.getDomainFromJid(this.connection.jid)
+		this.handlerStopheMessage()
+	}
+
+	setStream(stream: MediaStream) {
+		this.localStream=stream
 	}
 	_enablingHandlerPC() {
 		this.peerConnection.ontrack=(event: any) => {
@@ -53,17 +58,14 @@ class ConferenceMaster {
 		}).c('body').t(btoa(JSON.stringify({ "candidate": event.candidate })))
 		this.connection.send(message)
 	}
-	roomOn(roomParams: {
-		roomName: string,
-		roomDomain: string,
-		userNode: string
-	}) {
+	roomOn() {
 		const message=new this.Strophe.Builder('presence', {
-			to: `${roomParams.roomName}@${roomParams.roomDomain}/${roomParams.userNode}`
+			to: `${this.roomName}@${this.domain}/${this.node}`
 		}).c('x', {
 			xmlns: 'http://jabber.org/protocol/muc'
 		})
 		this.connection.send(message)
+
 	}
 	handlerStopheMessage=() => {
 		this.connection.addHandler(handlerPresence, null, 'presence')
