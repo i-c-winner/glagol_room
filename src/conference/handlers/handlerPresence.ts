@@ -1,5 +1,6 @@
+import handlerIq from "./handlerIq"
 function handlerPresence(params: any) {
-	const { Strophe, node, domain, connection, roomName }=params
+	const { Strophe, node, domain, connection, roomName, displayName }=params
 	const callback=(stanza: any) => {
 		const from=stanza.getAttribute('from').split('/')[1]
 		const x=stanza.getElementsByTagName('x')
@@ -33,7 +34,7 @@ function handlerPresence(params: any) {
 
 			default:
 				console.log('this is current');
-
+				handlerIq(params)
 				break;
 		}
 

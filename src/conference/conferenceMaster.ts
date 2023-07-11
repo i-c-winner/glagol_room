@@ -101,7 +101,6 @@ class ConferenceMaster {
 		this.localStream=stream
 	}
 	setDisplayName(name: string) {
-		debugger
 		this.displayName=name
 	}
 	getDisplayName=() => {

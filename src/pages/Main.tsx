@@ -34,7 +34,7 @@ export default function Main() {
 	}
 	function actionCreateNameComponent(user: string) {
 		dispatch(changeDisplayName(user))
-		if (user==='') {
+		if (user===''||user===undefined) {
 			conferenceMaster.setDisplayName('unknown User')
 		} else {
 			conferenceMaster.setDisplayName(user)
