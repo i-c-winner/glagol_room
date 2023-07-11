@@ -1,4 +1,4 @@
-import { useDispatch, useStore } from "react-redux"
+import { useDispatch, useStore, useSelector } from "react-redux"
 import * as strophe from 'strophe.js'
 import Main from "../pages/Main"
 import setRegister from "./register"
@@ -15,6 +15,7 @@ export default function Conference() {
 	const userPassword=getRandomText(9)
 	const store=useStore()
 	const dispatch=useDispatch()
+	const { roomName }=useSelector((state: any) => state.room)
 	initConference(dispatch, store.getState(), api)
 	function initConference(dispatch: any, state: any, { getConnection }: any) {
 		getConnection().then((connection: any) => {
@@ -43,7 +44,8 @@ export default function Conference() {
 						]
 					})
 					dispatch(changeXMPPConnected())
-					conferenceMaster.init(connection, pc)
+
+					conferenceMaster.init(connection, pc, roomName)
 
 					// do something after successful authentication
 				} else {

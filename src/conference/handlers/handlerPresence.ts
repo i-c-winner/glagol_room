@@ -1,6 +1,9 @@
-import { connect } from "http2"
-
+import conferenceMaster from "../conferenceMaster";
 const handlerPresence=(stanza: any) => {
+	if (this!==undefined) console.log(this.connection)
+	const Strophe=conferenceMaster.getStrophe()
+	console.log(this);
+	debugger
 	const from=stanza.getAttribute('from').split('/')[1]
 	const x=stanza.getElementsByTagName('x')
 
@@ -15,10 +18,9 @@ const handlerPresence=(stanza: any) => {
 	switch (status().length) {
 		case 3:
 			console.log('creater Room');
-			const { connection, strophe, userNode, roomName, roomDomain }=window.glagol
-			const message=new strophe.Strophe.Builder('iq', {
-				id: userNode,
-				to: `${roomName}@${roomDomain}`,
+			const message=new Strophe.Builder('iq', {
+				id: this.node,
+				to: `${this.roomName}@${this.domain}`,
 				type: 'set'
 			}).c('query', {
 				xmlns: 'http://jabber.org/protocol/muc#owner'
@@ -26,16 +28,19 @@ const handlerPresence=(stanza: any) => {
 				xmlns: 'jabber:x:data',
 				type: 'submit'
 			})
-			connection.send(message)
+			this.connection.send(message)
 
 			break;
 		case 2:
 			console.log('this is from moderator');
 
 		default:
-			if (from===window.glagol.userNode) {
-				console.log('this is current');
+			if (this!==undefined) {
+				if (from===this.undefined) {
+					console.log('this is current');
+				}
 			}
+
 			break;
 	}
 

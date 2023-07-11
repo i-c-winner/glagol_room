@@ -8,7 +8,7 @@ const sliceUser=createSlice({
 		userNode: getRandomText(5),
 		password: getRandomText(8),
 		role: '',
-		displayName: ''
+		displayName: 'default Name'
 	},
 	reducers: {
 		changeDisplayName: ((state: any, action: Payload<string>) => {

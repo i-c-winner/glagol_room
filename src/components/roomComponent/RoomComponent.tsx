@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 
 export default function RoomComponent() {
 	const { nameRoom }=useSelector((state: any) => {
-		console.log(state.room);
 		return state.room
 	})
 
