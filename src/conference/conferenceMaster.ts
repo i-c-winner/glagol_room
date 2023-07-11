@@ -16,6 +16,7 @@ class ConferenceMaster {
 	static instance: any
 
 	constructor() {
+		console.log(ConferenceMaster.instance);
 		if (ConferenceMaster.instance) {
 			return ConferenceMaster.instance
 		}
@@ -37,7 +38,12 @@ class ConferenceMaster {
 		this.domain=this.Strophe.getDomainFromJid(this.connection.jid)
 		this.handlerStopheMessage()
 	}
-
+	setRoomName(room: string) {
+		this.roomName=room
+	}
+	getRoomName() {
+		return this.roomName
+	}
 	setStream(stream: MediaStream) {
 		this.localStream=stream
 	}

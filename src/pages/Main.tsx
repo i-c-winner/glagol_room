@@ -7,6 +7,8 @@ import { ThemeProvider } from "@emotion/react"
 import { darkTheme } from "../Ui/themes/theme"
 import { changeNameRoom } from "../store/reducers/sliceRoom"
 import { changeDisplayName } from "../store/reducers/sliceUser"
+import conferenceMaster from "../conference/conferenceMaster"
+import getRandomText from "../plugins/getRandomText"
 
 export default function Main() {
 	const dispatch=useDispatch()
@@ -20,7 +22,9 @@ export default function Main() {
 
 	function actionCreateRoomComponent(room: string) {
 		if (room!=='') {
-			dispatch(changeNameRoom(room))
+			conferenceMaster.setRoomName(room)
+		} else {
+			conferenceMaster.setRoomName(getRandomText(8))
 		}
 		setState({
 			createrRoomComponent: false,

@@ -5,7 +5,7 @@ import conferenceMaster from "../../conference/conferenceMaster";
 function startWebRTC() {
 	navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream: MediaStream) => {
 		conferenceMaster.setStream(stream)
-		console.log(stream);
+		console.log(conferenceMaster);
 	})
 }
 export default function RoomComponent() {
@@ -22,7 +22,7 @@ export default function RoomComponent() {
 
 	useEffect(() => {
 		console.log();
-		history.replaceState({}, '', nameRoom)
+		history.replaceState({}, '', conferenceMaster.getRoomName())
 	}, [])
 	return (
 		<div>RoomComponent</div>

@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from 'react'
 import { Button, TextField } from "@mui/material"
 import { Box } from "@mui/material"
-
 import { useTheme } from "@mui/material/styles"
+import conferenceMaster from "../../conference/conferenceMaster"
 
 export default function createRoomComponent(props: any) {
 	const theme=useTheme()
@@ -59,7 +59,7 @@ export default function createRoomComponent(props: any) {
 				}}
 			>
 				<TextField
-
+					onChange={changeRoomName}
 					inputRef={refRoomName}
 					sx={stylesInput}
 					id="outlined-basic" label="Outlined" variant="outlined" />
