@@ -1,5 +1,6 @@
 import handlerPresence from "./handlers/handlerPresence"
 import handlerIq from "./handlers/handlerIq"
+import handlerMessage from "./handlers/handkerMessage"
 class ConferenceMaster {
 	connection: any
 	peerConnection: any
@@ -41,18 +42,19 @@ class ConferenceMaster {
 	setRoomName(room: string) {
 		this.roomName=room
 	}
-	getRoomName() {
-		return this.roomName
-	}
+
 	setStream(stream: MediaStream) {
 		this.localStream=stream
 	}
 	_enablingHandlerPC() {
+		console.log(this.peerConnection);
 		this.peerConnection.ontrack=(event: any) => {
 			console.info(event, 'ADD TRACK EVENT')
 		}
 		this.peerConnection.onicecandidate=(event: RTCPeerConnectionIceEvent) => {
+			console.log(event);
 			if (event.candidate) {
+				console.info(event);
 				// conferenceMaster.doSignalingCandidate(event)
 			}
 		}
@@ -81,6 +83,7 @@ class ConferenceMaster {
 	handlerStopheMessage=() => {
 		this.connection.addHandler(handlerPresence, null, 'presence')
 		this.connection.addHandler(handlerIq, null, 'iq')
+		this.connection.addHandler(handlerMessage)
 	}
 
 
@@ -96,6 +99,9 @@ class ConferenceMaster {
 	}
 	getStrophe() {
 		return this.Strophe
+	}
+	getRoomName() {
+		return this.roomName
 	}
 }
 
