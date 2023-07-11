@@ -15,7 +15,6 @@ export default function Conference() {
 	const userPassword=getRandomText(9)
 	const store=useStore()
 	const dispatch=useDispatch()
-	const { roomName }=useSelector((state: any) => state.room)
 	initConference(dispatch, store.getState(), api)
 	function initConference(dispatch: any, state: any, { getConnection }: any) {
 		getConnection().then((connection: any) => {
@@ -43,10 +42,8 @@ export default function Conference() {
 							{ urls: [config.peerServer] }
 						]
 					})
-					dispatch(changeXMPPConnected())
-
 					conferenceMaster.init(connection, pc)
-
+					dispatch(changeXMPPConnected())
 					// do something after successful authentication
 				} else {
 					// Do other stuff
