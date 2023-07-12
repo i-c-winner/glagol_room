@@ -43,7 +43,11 @@ export default function Conference() {
 						]
 					})
 					conferenceMaster.init(connection, pc)
+					console.log(conferenceMaster.displayName, conferenceMaster.domain);
+
+					conferenceMaster.handlerStopheMessage()
 					dispatch(changeXMPPConnected())
+					console.log(conferenceMaster.getConnection());
 					// do something after successful authentication
 				} else {
 					// Do other stuff

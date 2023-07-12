@@ -5,7 +5,6 @@ import CreaterNameComponent from "../components/createrNameComponent/CreaterName
 import RoomComponent from "../components/roomComponent/RoomComponent"
 import { ThemeProvider } from "@emotion/react"
 import { darkTheme } from "../Ui/themes/theme"
-import { changeNameRoom } from "../store/reducers/sliceRoom"
 import { changeDisplayName } from "../store/reducers/sliceUser"
 import conferenceMaster from "../conference/conferenceMaster"
 import getRandomText from "../plugins/getRandomText"
@@ -22,9 +21,9 @@ export default function Main() {
 
 	function actionCreateRoomComponent(room: string) {
 		if (room!=='') {
-			conferenceMaster.setRoomName(room)
+			conferenceMaster.roomName=room
 		} else {
-			conferenceMaster.setRoomName(getRandomText(8))
+			conferenceMaster.roomName=getRandomText(8)
 		}
 		setState({
 			createrRoomComponent: false,
@@ -35,9 +34,9 @@ export default function Main() {
 	function actionCreateNameComponent(user: string) {
 		dispatch(changeDisplayName(user))
 		if (user===''||user===undefined) {
-			conferenceMaster.setDisplayName('unknown User')
+			conferenceMaster.displayName='unknown User'
 		} else {
-			conferenceMaster.setDisplayName(user)
+			conferenceMaster.displayName=user
 		}
 		setState({
 			createrRoomComponent: false,
