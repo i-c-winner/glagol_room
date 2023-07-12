@@ -2,9 +2,9 @@ import config from "../../config";
 import { useEffect } from "react"
 import { useSelector } from "react-redux";
 import conferenceMaster from "../../conference/conferenceMaster";
+import getRandomText from "../../plugins/getRandomText";
 
 function RoomComponent() {
-
 	function startWebRTC() {
 		conferenceMaster.peerConnection=new RTCPeerConnection({
 			iceServers: [
@@ -14,17 +14,20 @@ function RoomComponent() {
 
 		const peerConnection=conferenceMaster.peerConnection
 		peerConnection.onicecandidate=(event: any) => {
-			console.info(conferenceMaster);
-			console.log('iceCandidate');
+			if (event.candidate) {
+				console.log(event);
+				const candidateJsonB64=btoa(JSON.stringify({ "candidate": event.candidate }))
+				conferenceMaster.doSignalingCandidate(candidateJsonB64)
+			} else {
+				console.log("onicecandidate event: event.candidate = null!!!  isInit = (doesn't matter for now)")
+			}
 		}
 
 		peerConnection.ontrack=(event: any) => {
 			console.log(event, 'track');
 		}
 
-		console.log(conferenceMaster.peerConnection);
 		navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream: MediaStream) => {
-
 			stream.getTracks().forEach((track: MediaStreamTrack) => {
 				conferenceMaster.peerConnection.addTrack(track)
 			});
@@ -35,12 +38,39 @@ function RoomComponent() {
 	}
 
 	useEffect(() => {
+		const { Strophe }=window.global
 		history.replaceState({}, '', conferenceMaster.roomName)
 		conferenceMaster.initConference.then((connect) => {
-			conferenceMaster.conference=connect
-			startWebRTC()
+			console.log(conferenceMaster);
+			const callback=function(status: number) {
+				if (status===Strophe.Status.REGISTER) {
+					// fill out the fields
+					connect.register.fields.username=getRandomText(5);
+					connect.register.fields.password=getRandomText(9);
+					// calling submit will continue the registration process
+					connect.register.submit();
+				} else if (status===Strophe.Status.REGISTERED) {
+					console.log("registered!");
+					// calling login will authenticate the registered JID.
+					connect.authenticate();
+				} else if (status===Strophe.Status.CONFLICT) {
+					console.log("Contact already existed!");
+				} else if (status===Strophe.Status.NOTACCEPTABLE) {
+					console.log("Registration form not properly filled out.")
+				} else if (status===Strophe.Status.REGIFAIL) {
+					console.log("The Server does not support In-Band Registration")
+				} else if (status===Strophe.Status.CONNECTED) {
+					conferenceMaster.jid=connect.jid
+					conferenceMaster.addHandlers(connect)
+					conferenceMaster.conference=connect
+					startWebRTC()
+					console.info('connect')
+				} else {
+					// Do other stuff
+				}
+			};
+			connect.register.connect("prosolen.net", callback);
 		})
-		console.info(conferenceMaster);
 	}, [])
 	return (
 		<div>RoomComponent</div>
