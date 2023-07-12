@@ -1,27 +1,46 @@
+import config from "../../config";
 import { useEffect } from "react"
 import { useSelector } from "react-redux";
 import conferenceMaster from "../../conference/conferenceMaster";
-// function startWebRTC() {
-// 	const peerConnection=conferenceMaster.getPeerConnection()
-// 	navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream: MediaStream) => {
-// 		conferenceMaster.setLocalStream(stream)
-// 		stream.getTracks().forEach((track: MediaStreamTrack) => {
-// 			peerConnection.addTrack(track)
-// 		});
-// 		peerConnection.createOffer().then((offer: RTCOfferOptions) => {
-// 			peerConnection.setLocalDescription(offer)
-// 		})
-// 	})
-// }
+
 function RoomComponent() {
-	const { XMPPConnected }=useSelector((state: any) => state.glagol)
-	// useEffect(() => {
-	// 	console.log(conferenceMaster);
-	// }, [XMPPConnected])
+
+	function startWebRTC() {
+		conferenceMaster.peerConnection=new RTCPeerConnection({
+			iceServers: [
+				{ urls: [config.peerServer] }
+			]
+		})
+
+		const peerConnection=conferenceMaster.peerConnection
+		peerConnection.onicecandidate=(event: any) => {
+			console.info(conferenceMaster);
+			console.log('iceCandidate');
+		}
+
+		peerConnection.ontrack=(event: any) => {
+			console.log(event, 'track');
+		}
+
+		console.log(conferenceMaster.peerConnection);
+		navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream: MediaStream) => {
+
+			stream.getTracks().forEach((track: MediaStreamTrack) => {
+				conferenceMaster.peerConnection.addTrack(track)
+			});
+			peerConnection.createOffer().then((offer: RTCOfferOptions) => {
+				peerConnection.setLocalDescription(offer)
+			})
+		})
+	}
 
 	useEffect(() => {
 		history.replaceState({}, '', conferenceMaster.roomName)
-		conferenceMaster.initConference.then((res) => console.log(res))
+		conferenceMaster.initConference.then((connect) => {
+			conferenceMaster.conference=connect
+			startWebRTC()
+		})
+		console.info(conferenceMaster);
 	}, [])
 	return (
 		<div>RoomComponent</div>

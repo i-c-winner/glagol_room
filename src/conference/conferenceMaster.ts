@@ -5,7 +5,7 @@ import handlerIq from "./handlers/handlerIq"
 import handlerPresence from "./handlers/handlerPresence"
 
 interface Conference extends Partial<ConferenceMaster> {
-	initConference: Promise<any>
+	initConference: Promise<any>,
 }
 const conferenceMaster: Conference={
 	initConference: new Promise((resolve: any, reject: any) => {
@@ -15,7 +15,8 @@ const conferenceMaster: Conference={
 		connection.addHandler(handlerMessage, null, 'message')
 		connection.addHandler(handlerPresence, null, 'presence')
 		resolve(connection)
-	})
+	}),
+
 
 }
 export default conferenceMaster

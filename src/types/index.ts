@@ -7,5 +7,5 @@ type ConferenceMaster={
 	roomName: string,
 	connection: any,
 	peerConnection: any,
-	conference: any
+	conference: any,
 }
