@@ -4,5 +4,9 @@ function getDomain(jid: string|undefined) {
 	}
 	return undefined
 }
-
-export { getDomain }
+function getNode(jid: string|undefined) {
+	if (jid!==undefined) {
+		return window.global.Strophe.getNodeFromJid
+	}
+}
+export { getDomain, getNode }

@@ -8,5 +8,6 @@ type ConferenceMaster={
 	connection: any,
 	peerConnection: any,
 	conference: any,
-	jid: string
+	jid: string,
+	id: string
 }

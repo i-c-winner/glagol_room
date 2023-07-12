@@ -1,5 +1,6 @@
 
 const handlerPresence=(stanza: any) => {
+	debugger
 	const from=stanza.getAttribute('from').split('/')[1]
 	const x=stanza.getElementsByTagName('x')
 	console.log(stanza);

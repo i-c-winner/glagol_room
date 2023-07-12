@@ -43,9 +43,11 @@ function RoomComponent() {
 		conferenceMaster.initConference.then((connect) => {
 			console.log(conferenceMaster);
 			const callback=function(status: number) {
+				const userId=getRandomText(5)
+				conferenceMaster.id=userId
 				if (status===Strophe.Status.REGISTER) {
 					// fill out the fields
-					connect.register.fields.username=getRandomText(5);
+					connect.register.fields.username=userId;
 					connect.register.fields.password=getRandomText(9);
 					// calling submit will continue the registration process
 					connect.register.submit();
@@ -63,7 +65,9 @@ function RoomComponent() {
 					conferenceMaster.jid=connect.jid
 					conferenceMaster.addHandlers(connect)
 					conferenceMaster.conference=connect
-					startWebRTC()
+					conferenceMaster.roomOn()
+					// startWebRTC()
+
 					console.info('connect')
 				} else {
 					// Do other stuff
