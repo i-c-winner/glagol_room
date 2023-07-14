@@ -33,7 +33,7 @@ function RoomComponent() {
       peerConnection.createOffer().then((offer: RTCOfferOptions) => {
         peerConnection.setLocalDescription(offer)
       })
-    })
+    }).then(() => conferenceMaster.roomOn())
   }
 
   useEffect(() => {
@@ -70,8 +70,7 @@ function RoomComponent() {
                   conferenceMaster.jid = connect.jid
                   conferenceMaster.addHandlers(connect)
                   conferenceMaster.conference = connect
-                  conferenceMaster.roomOn()
-                  console.info('connect')
+                  startWebRTC()
                 } else {
                   // Do other stuff
                 }

@@ -49,8 +49,10 @@ const conferenceMaster: Conference = {
 
       } else if (length === 2) {
         console.log('this is from moderator');
-        console.log('this is current');
-        const messageHaveRoom = new Strophe.Builder('message', { to: 'admin_cs@prosolen.net/in', type: 'chat' })
+        const messageHaveRoom = new Strophe.Builder('message', {
+          to: 'admin_cs@prosolen.net/in',
+          type: 'chat'
+        })
           .c('x', {
             xmlns: 'jabber:x:conference',
             jid: `roomName@conference.prosolen.net`
@@ -61,7 +63,10 @@ const conferenceMaster: Conference = {
         this.conference.send(messageHaveRoom)
       } else {
         console.log('this is current');
-        const messageHaveRoom = new Strophe.Builder('message', { to: 'admin_cs@prosolen.net/in', type: 'chat' })
+        const messageHaveRoom = new Strophe.Builder('message', {
+          to: 'admin_cs@prosolen.net/in',
+          type: 'chat'
+        })
           .c('x', {
             xmlns: 'jabber:x:conference',
             jid: `roomName@conference.prosolen.net`
@@ -73,7 +78,6 @@ const conferenceMaster: Conference = {
       }
       return true
     }
-
     const handlerIq = (stanza: any) => {
       console.info('IQ:', stanza)
       const type = stanza.getAttribute('type')
@@ -82,8 +86,11 @@ const conferenceMaster: Conference = {
           action: "INVITATION",
           localTracks: { audio: true, video: true }
         }
-        const inviteMessageB64 = window.btoa(JSON.stringify(invitation))
-        const message = new Strophe.Builder('message', { to: 'admin_cs@prosolen.net/in', type: 'chat' })
+        const inviteMessageB64 = btoa(JSON.stringify(invitation))
+        const message = new Strophe.Builder('message', {
+          to: 'admin_cs@prosolen.net/in',
+          type: 'chat'
+        })
           .c('x', {
             xmlns: 'jabber:x:conference',
             jid: `${this.roomName}@conference.prosolen.net`
@@ -94,6 +101,7 @@ const conferenceMaster: Conference = {
       }
     }
     const handlerMessage = (stanza: any) => {
+      debugger
       console.info(stanza, 'STANZA')
     }
 
